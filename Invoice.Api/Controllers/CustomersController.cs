@@ -4,13 +4,15 @@ using Invoice.Infrastructure.Commands.Customers;
 using Invoice.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 
 namespace Invoice.Api.Controllers
 {
-    [Authorize(Policy = "admin")]
+    //[Authorize(Policy = "admin")]
     [Route("[controller]")]
     public class CustomersController : ApiControllerBase
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly ICustomerService _customerService;
 
         public CustomersController(ICustomerService customerService,
@@ -23,6 +25,7 @@ namespace Invoice.Api.Controllers
         [HttpGet("{nip}")]
         public async Task<IActionResult> Get (int nip)
         {
+            Logger.Info($"Getting customer with NIP: {nip}.");
             var customer = await _customerService.GetAsync(nip);
             if(customer == null)
             {

@@ -4,13 +4,15 @@ using Invoice.Infrastructure.Commands.Users;
 using Invoice.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 
 namespace Invoice.Api.Controllers
 {
-    [Authorize(Policy = "admin")]
+    //[Authorize(Policy = "admin")]
     [Route("[controller]")]
     public class UsersController : ApiControllerBase
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly IUserService _userService;
 
         public UsersController(IUserService userService, 
@@ -23,9 +25,8 @@ namespace Invoice.Api.Controllers
         [HttpGet("{username}")]
         public async Task<IActionResult> Get (string username)
         {         
-
+            Logger.Info($"Getting user: {username}");
             var user = await _userService.GetAsync(username);
-
             if(user == null)
             {
                 return NotFound();

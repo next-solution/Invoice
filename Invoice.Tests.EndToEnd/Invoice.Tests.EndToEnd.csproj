@@ -9,7 +9,11 @@
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
   </PropertyGroup>
-
+  <ItemGroup>
+    <None Update="nlog.config">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../Invoice.Api/Invoice.Api.csproj" />
     <ProjectReference Include="../Invoice.Infrastructure/Invoice.Infrastructure.csproj" />
