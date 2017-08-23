@@ -33,13 +33,13 @@ namespace Tests.EndToEnd
             response.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
 		}
 
-		/*[Fact]
+		[Fact]
 		public async Task given_invalid_user_should_not_exist()
 		{
 			var user = "user111";
 			var response = await _client.GetAsync($"users/{user}");
 			response.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotFound);
-		}*/
+		}
 
 		[Fact]
 		public async Task given_unique_user_should_be_created()

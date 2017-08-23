@@ -3,7 +3,7 @@ using Invoice.Core.CustomTypes;
 
 namespace Invoice.Core.Domain
 {
-    public class ProductOrService
+    public class Product
     {
         public Guid Id { get; protected set; }
         public string Name { get; protected set; }
@@ -13,17 +13,30 @@ namespace Invoice.Core.Domain
         public DateTime CreatedAt { get; protected set; }
         public DateTime UpdatedAt { get; protected set;  }
 
-        protected ProductOrService()
+        protected Product()
         {
         }
 
-        public ProductOrService(string name, decimal price, decimal tax, EnumUnitOfMeasure unitOfMeasure)
+        public Product(string name, decimal price, decimal optTax = 0.23M, 
+                       EnumUnitOfMeasure optUnitOfMeasure = EnumUnitOfMeasure.Szt)
         {
+			if (string.IsNullOrWhiteSpace(name))
+			{
+				throw new Exception("Product's name can not be empty.");
+			}
+			if (price < 0)
+			{
+				throw new Exception("Price can not be less than 0.");
+			}
+			if (optTax < 0)
+			{
+				throw new Exception("Tax can not be less than 0");
+			}
             Id = new Guid();
             Name = name;
             Price = price;
-            Tax = tax;
-            UnitOfMeasure = unitOfMeasure;
+            Tax = optTax;
+            UnitOfMeasure = optUnitOfMeasure;
             CreatedAt = DateTime.UtcNow;
         }
 
@@ -33,12 +46,7 @@ namespace Invoice.Core.Domain
             {
                 throw new Exception("Product's name can not be empty.");
             }
-            if (name == Name)
-            {
-                return;
-            }
-            Name = name;
-            UpdatedAt = DateTime.UtcNow;
+            Name = Update<string>(Name, name);
         }
 
         public void SetPrice (decimal price)
@@ -47,12 +55,7 @@ namespace Invoice.Core.Domain
             {
                 throw new Exception("Price can not be less than 0."); 
             }
-            if (price == Price)
-            {
-                return;
-            }
-            Price = price;
-            UpdatedAt = DateTime.UtcNow;
+            Price = Update<decimal>(Price, price);
         }
 
         public void SetTax (decimal tax)
@@ -61,22 +64,22 @@ namespace Invoice.Core.Domain
             {
                 throw new Exception("Tax can not be less than 0"); 
             }
-            if (tax == Tax)
-            {
-                return;
-            }
-            Tax = tax;
-            UpdatedAt = DateTime.UtcNow;
+            Tax = Update<decimal>(Tax, tax);
         }
 
         public void SetUnitOfMeasure (EnumUnitOfMeasure unitOfMeasure)
         {
-            if (unitOfMeasure == UnitOfMeasure)
+            UnitOfMeasure = Update<EnumUnitOfMeasure>(UnitOfMeasure, unitOfMeasure);
+        }
+
+        private T Update<T>(T newValue, T oldValue)
+        {
+            if(oldValue.Equals(newValue))
             {
-                return;
+                return oldValue;
             }
-            UnitOfMeasure = unitOfMeasure;
             UpdatedAt = DateTime.UtcNow;
+            return newValue;
         }
     }
 }

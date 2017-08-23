@@ -15,7 +15,7 @@ namespace Invoice.Infrastructure.Handlers.Customers
         public async Task HandleAsync(CreateCustomer command)
         {
             await _customerService.AddAsync(command.Nip, command.Name, 
-                command.Address, command.ZipCode, command.City);
+                command.Address);
         }
     }
 }

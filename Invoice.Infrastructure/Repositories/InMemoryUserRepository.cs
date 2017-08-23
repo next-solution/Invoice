@@ -14,7 +14,7 @@ namespace Invoice.Infrastructure.Repositories
             new User("user1", "NuTmrPTF76W4imQyOOHp2ygedZiclX1QbQv5vs9Z0N09u1oSrkT04g==",
                 "YCWa1XoXNt72qLqpGpp3uN88X9a/ZGb/jfV3EFWM4HWZtfOA2guf7Q==", "Tomasz Kostecki"),
             new User("user2", "NuTmrPTF76W4imQyOOHp2ygedZiclX1QbQv5vs9Z0N09u1oSrkT04g==",
-                "YCWa1XoXNt72qLqpGpp3uN88X9a/ZGb/jfV3EFWM4HWZtfOA2guf7Q==", "Mateusz Szczepański")
+                "YCWa1XoXNt72qLqpGpp3uN88X9a/ZGb/jfV3EFWM4HWZtfOA2guf7Q==", "Mateusz Szczepański", "email2@email.com")
         };
         public async Task AddAsync(User user)
         {

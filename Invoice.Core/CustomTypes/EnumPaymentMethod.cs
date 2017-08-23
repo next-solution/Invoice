@@ -1,9 +1,10 @@
 ﻿using System;
-namespace Invoice.Infrastructure.CustomTypes
+namespace Invoice.Core.CustomTypes
 {
     public enum EnumPaymentMethod 
     {
-        transfer, 
-        cash 
+        Transfer, 
+        Cash,
+        Unsettled
     }
 }

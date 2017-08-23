@@ -5,13 +5,10 @@ namespace Invoice.Core.Domain
 {
     public class Customer
     {
-        private static readonly Regex ZipCodeRegex = new Regex(@"^\d{2}-\d{3}$");
         public Guid Id { get; protected set; }
-        public int Nip { get; protected set; }
+        public long Nip { get; protected set; }
         public string Name { get; protected set; }
         public string Address { get; protected set; }
-        public string ZipCode { get; protected set; }
-        public string City { get; protected set; }
         public string Email {get; protected set; }
         public DateTime CreatedAt { get; protected set; }
         public DateTime UpdatedAt { get; protected set; }
@@ -19,49 +16,56 @@ namespace Invoice.Core.Domain
         protected Customer()
         {
         }
-        public Customer (int nip, string name, string address, string zipCode, string city)
+
+        public Customer(long nip, string name, string address, string optEmail = null)
         {
-            if (!ZipCodeRegex.IsMatch(zipCode))
-            {
-                throw new Exception ("Zip code is invalid.");
-            }
+            if (nip.ToString().Length != 10)
+			{
+				throw new Exception("Customer nip is invalid.");
+			}
+			if (string.IsNullOrWhiteSpace(name))
+			{
+				throw new Exception("Customer name can not be empty.");
+			}
+            if (string.IsNullOrWhiteSpace(address))
+			{
+				throw new Exception("Customer adress can not be empty.");
+			}
             Id = Guid.NewGuid();
             Nip = nip;
             Name = name;
             Address = address;
-            SetZipCode(zipCode);
-            City = city;
+            Email = optEmail;
             CreatedAt = DateTime.UtcNow;
-            new InvoiceLayout(Guid.NewGuid());
         }
+
         public void SetName (string name)
         {
-            Name = name;
-            UpdatedAt = DateTime.UtcNow;
+            if(string.IsNullOrWhiteSpace(name))
+            {
+                throw new Exception("Customer name can not be empty.");
+            }
+            Name = Update<string>(Name, name);
         }
+
         public void SetAddress (string address)
         {
-            Address = address;
-            UpdatedAt = DateTime.UtcNow;
+            Address = Update<string>(Address, address);
         }
-        public void SetZipCode (string zipCode)
-        {
-            if (!ZipCodeRegex.IsMatch(zipCode))
-            {
-                throw new Exception ("Zip code is invalid.");
-            }
-            ZipCode = zipCode;
-            UpdatedAt = DateTime.UtcNow;
-        }
-        public void SetCity(string city)
-        {
-            City = city;
-            UpdatedAt = DateTime.UtcNow;
-        }
+
         public void SetEmail(string email)
         {
-            Email = email;
-            UpdatedAt = DateTime.UtcNow;
+            Email = Update<string>(Email, email);
         }
+		
+        private T Update<T>(T newValue, T oldValue)
+		{
+			if (oldValue.Equals(newValue))
+			{
+				return oldValue;
+			}
+			UpdatedAt = DateTime.UtcNow;
+			return newValue;
+		}
     }
 }

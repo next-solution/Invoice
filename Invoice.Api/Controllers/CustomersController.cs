@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Invoice.Infrastructure.Commands;
 using Invoice.Infrastructure.Commands.Customers;
@@ -23,11 +24,23 @@ namespace Invoice.Api.Controllers
 
         // GET api/values/5
         [HttpGet("{nip}")]
-        public async Task<IActionResult> Get (int nip)
+        public async Task<IActionResult> Get (long nip)
         {
             Logger.Info($"Getting customer with NIP: {nip}.");
             var customer = await _customerService.GetAsync(nip);
             if(customer == null)
+            {
+                return NotFound();
+            }
+            return Json(customer);
+        }
+
+        [HttpGet("{name}")]
+        public async Task<IActionResult> Get(string name)
+        {
+            Logger.Info($"Getting customers with name: {name}");
+            var customer = await _customerService.GetByNameAsync(name);
+            if(!customer.Any())
             {
                 return NotFound();
             }
