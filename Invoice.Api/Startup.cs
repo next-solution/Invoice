@@ -72,7 +72,7 @@ namespace Invoice.Api
             env.ConfigureNLog("nlog.config");
 
             var datainitializerSettings = app.ApplicationServices.GetService<DataInitializerSettings>();
-            if(datainitializerSettings.isInitialize)
+            if(datainitializerSettings.Seed)
             {
                 var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
                 dataInitializer.SeedAsync();

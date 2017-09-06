@@ -21,7 +21,19 @@ namespace Invoice.Api.Controllers
             _userService = userService;
 
         }
-        
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            Logger.Info($"Getting all users...");
+            var users = await _userService.GetAllAsync();
+            if (users == null)
+            {
+                return NotFound();
+            }
+            return Json(users);
+        }
+
         [HttpGet("{username}")]
         public async Task<IActionResult> Get (string username)
         {         

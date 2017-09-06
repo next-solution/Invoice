@@ -6,6 +6,6 @@ namespace Invoice.Infrastructure.Settings
 {
     public class DataInitializerSettings
     {
-        public bool isInitialize { get; set; }
+        public bool Seed { get; set; }
     }
 }

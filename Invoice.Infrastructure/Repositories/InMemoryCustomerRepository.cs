@@ -7,7 +7,7 @@ using Invoice.Core.Repositories;
 
 namespace Invoice.Infrastructure.Repositories
 {
-    public class InMemoryCustomerRepository : ICustomerRepository
+    public class InMemoryCustomerRepository
     {
         
         private static ISet<Customer> _customers = new HashSet<Customer>()
