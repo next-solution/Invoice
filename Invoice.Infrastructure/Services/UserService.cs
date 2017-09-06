@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Invoice.Core.Domain;
@@ -19,6 +20,13 @@ namespace Invoice.Infrastructure.Services
             _mapper = mapper;
             _encrypter = encrypter;
         }
+
+        public async Task<IEnumerable<UserDto>> GetAllAsync()
+        {
+            var users = await _userRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<User>, IEnumerable<UserDto>>(users);
+        }
+
         public async Task<UserDto> GetAsync(string username)
         {
             var user = await _userRepository.GetAsync(username);

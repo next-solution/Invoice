@@ -21,6 +21,7 @@ namespace Invoice.Infrastructure.IoC
             builder.RegisterModule<CommandModule>();
             builder.RegisterModule<RepositoryModule>();
             builder.RegisterModule<ServiceModule>();
+            builder.RegisterModule<SqlModule>();
             builder.RegisterModule<HandlerModule>();
             builder.RegisterModule(new SettingsModule(_configuration));
         }

@@ -2,6 +2,7 @@ using Autofac;
 using Microsoft.Extensions.Configuration;
 using Invoice.Infrastructure.Settings;
 using Invoice.Infrastructure.Extensions;
+using Invoice.Infrastructure.EF;
 
 namespace Invoice.Infrastructure.IoC.Modules
 {
@@ -19,6 +20,10 @@ namespace Invoice.Infrastructure.IoC.Modules
             builder.RegisterInstance(_configuration.GetSettings<JwtSettings>())
                 .SingleInstance();
             builder.RegisterInstance(_configuration.GetSettings<CompanySettings>())
+                .SingleInstance();
+            builder.RegisterInstance(_configuration.GetSettings<SqlSettings>())
+                .SingleInstance();
+            builder.RegisterInstance(_configuration.GetSettings<DataInitializerSettings>())
                 .SingleInstance();
         }
         

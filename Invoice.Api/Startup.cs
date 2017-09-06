@@ -4,6 +4,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Invoice.Core.Repositories;
 using Invoice.Infrastructure.IoC;
+using Invoice.Infrastructure.EF;
 using Invoice.Infrastructure.IoC.Modules;
 using Invoice.Infrastructure.Mappers;
 using Invoice.Infrastructure.Repositories;
@@ -38,11 +39,17 @@ namespace Invoice.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-/*            services.AddScoped<ICustomerRepository, InMemoryCustomerRepository>();
-            services.AddScoped<ICustomerService, CustomerService>();
-            services.AddScoped<IUserRepository, InMemoryUserRepository>();
-            services.AddScoped<IUserService, UserService>();*/
-           // services.AddSingleton(AutoMapperConfig.Initialize());
+            /*            services.AddScoped<ICustomerRepository, InMemoryCustomerRepository>();
+                        services.AddScoped<ICustomerService, CustomerService>();
+                        services.AddScoped<IUserRepository, InMemoryUserRepository>();
+                        services.AddScoped<IUserService, UserService>();*/
+            // services.AddSingleton(AutoMapperConfig.Initialize());
+
+            
+
+            services.AddEntityFrameworkSqlServer()
+                    .AddEntityFrameworkInMemoryDatabase()
+                    .AddDbContext<InvoiceContext>();
             services.AddAuthorization(x => x.AddPolicy("admin", p => p.RequireRole("admin")));
             services.AddMvc();
 
@@ -63,6 +70,13 @@ namespace Invoice.Api
             loggerFactory.AddNLog();
             app.AddNLogWeb();
             env.ConfigureNLog("nlog.config");
+
+            var datainitializerSettings = app.ApplicationServices.GetService<DataInitializerSettings>();
+            if(datainitializerSettings.isInitialize)
+            {
+                var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
+                dataInitializer.SeedAsync();
+            }
 
 
             var jwtSettings = app.ApplicationServices.GetService<JwtSettings>();
