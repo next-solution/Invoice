@@ -8,8 +8,8 @@ namespace Invoice.Core.Repositories
     public interface ICustomerRepository : IRepository
     {
 		Task<Customer> GetAsync(Guid id);
-		Task<Customer> GetAsync(long nip);
-        Task<Customer> GetAsync(string email);
+		Task<Customer> GetByNipAsync(string nip);
+        Task<Customer> GetByEmailAsync(string email);
         Task<IEnumerable<Customer>> GetByNameAsync(string name);
 		Task<IEnumerable<Customer>> GetAllAsync();
 		Task AddAsync (Customer customer);

@@ -4,7 +4,7 @@ using Invoice.Core.CustomTypes;
 
 namespace Invoice.Core.Domain
 {
-    public class Invoice
+    public class InvoiceDocument
     {
         
         public Guid Id { get; protected set; }
@@ -20,11 +20,11 @@ namespace Invoice.Core.Domain
         public DateTime ServiceDoneAt { get; protected set; }
         public int PaymentDate { get; protected set; }
         
-        protected Invoice()
+        protected InvoiceDocument()
         {
         }
 
-        public Invoice(Guid customerid, string number, decimal amount, IEnumerable<Product> services,
+        public InvoiceDocument(Guid customerid, string number, decimal amount, IEnumerable<Product> services,
                        DateTime serviceDoneAt, int paymentDate, decimal optLeftToPay = 0,
                        string optPlace = null, EnumPaymentMethod optPaymentMethod = EnumPaymentMethod.Unsettled)
         {

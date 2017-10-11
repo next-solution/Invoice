@@ -29,15 +29,15 @@ namespace Invoice.Infrastructure.Services
             return _mapper.Map<Customer, CustomerDto>(customer);
         }
 
-        public async Task<CustomerDto> GetAsync(long nip)
+        public async Task<CustomerDto> GetByNipAsync(string nip)
         {
-            var customer = await _customerRepository.GetAsync(nip);
+            var customer = await _customerRepository.GetByNipAsync(nip);
             return _mapper.Map<Customer, CustomerDto>(customer);
         }
 
-        public async Task<CustomerDto> GetAsync(string email)
+        public async Task<CustomerDto> GetByEmailAsync(string email)
         {
-            var customer = await _customerRepository.GetAsync(email);
+            var customer = await _customerRepository.GetByEmailAsync(email);
             return _mapper.Map<Customer, CustomerDto>(customer);
         }
 
@@ -47,9 +47,9 @@ namespace Invoice.Infrastructure.Services
             return _mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerDto>>(customer);
         }
 
-        public async Task AddAsync(long nip, string name, string address)
+        public async Task AddAsync(string nip, string name, string address)
         {
-            var customer = await _customerRepository.GetAsync(nip);
+            var customer = await _customerRepository.GetByNipAsync(nip);
             if (customer != null)
             {
                 throw new Exception ($"Customer with NIP: '{nip}' already exists");

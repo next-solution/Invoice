@@ -12,6 +12,7 @@ namespace Invoice.Infrastructure.Mappers
             {
                 cfg.CreateMap<User, UserDto>();
                 cfg.CreateMap<Customer, CustomerDto>();
+                cfg.CreateMap<InvoiceDocument, InvoiceDocumentDto>();
             })
             .CreateMapper();
     }

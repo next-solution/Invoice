@@ -5,7 +5,7 @@ namespace Invoice.Core.Domain
 {
     public class Company
     {
-        public long Nip {get; private set; }
+        public string Nip {get; private set; }
         public string Name {get; private set; }
         public string Address {get; private set; }
         public string Email {get; private set; }
@@ -16,9 +16,9 @@ namespace Invoice.Core.Domain
         {
         }
 
-        public Company(long nip, string name, string address, string optEmail = null)
+        public Company(string nip, string name, string address, string optEmail = null)
         {
-            if (nip.ToString().Length != 10)
+            if (nip.Length != 10)
             {
                 throw new Exception ("NIP length is invalid.");
             }

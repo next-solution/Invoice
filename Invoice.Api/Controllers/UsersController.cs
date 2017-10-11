@@ -25,7 +25,7 @@ namespace Invoice.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            Logger.Info($"Getting all users...");
+            Logger.Info($"Fetching all users...");
             var users = await _userService.GetAllAsync();
             if (users == null)
             {

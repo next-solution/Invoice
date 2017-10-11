@@ -13,6 +13,7 @@ namespace Invoice.Infrastructure.EF
         private readonly SqlSettings _settings;
         public DbSet<User> Users { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<InvoiceDocument> InvoiceDocuments { get; set; }
 
         public InvoiceContext(DbContextOptions<InvoiceContext> options, SqlSettings settings) : base(options)
         {
@@ -35,6 +36,8 @@ namespace Invoice.Infrastructure.EF
             userBuilder.HasKey(x => x.Id);
             var customerBuilder = modelBuilder.Entity<Customer>();
             customerBuilder.HasKey(x => x.Id);
+            var invoiceDocumentBuilder = modelBuilder.Entity<InvoiceDocument>();
+            invoiceDocumentBuilder.HasKey(x => x.Id);
         }
     }
 }

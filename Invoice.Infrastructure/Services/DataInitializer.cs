@@ -34,7 +34,7 @@ namespace Invoice.Infrastructure.Services
                 var username = $"user{i}";
                 await _userService.RegisterAsync(username, "password", "John Connor");
 
-                var nip = 1111111111 + i;
+                var nip = "111111111" + i.ToString();
                 var customerName = $"customer{i}";
                 await _customerService.AddAsync(nip, customerName, "address");
             }

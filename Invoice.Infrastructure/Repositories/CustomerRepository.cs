@@ -25,10 +25,10 @@ namespace Invoice.Infrastructure.Repositories
         public async Task<Customer> GetAsync(Guid id)
             => await _context.Customers.SingleOrDefaultAsync(x => x.Id == id);
 
-        public async Task<Customer> GetAsync(long nip)
+        public async Task<Customer> GetByNipAsync(string nip)
             => await _context.Customers.SingleOrDefaultAsync(x => x.Nip == nip);
 
-        public async Task<Customer> GetAsync(string email)
+        public async Task<Customer> GetByEmailAsync(string email)
             => await _context.Customers.SingleOrDefaultAsync(x => x.Email == email);
 
         public async Task<IEnumerable<Customer>> GetByNameAsync(string name)

@@ -23,11 +23,11 @@ namespace Invoice.Api.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{nip}")]
-        public async Task<IActionResult> Get (long nip)
+        [HttpGet("nip/{nip}")]
+        public async Task<IActionResult> GetByNip (string nip)
         {
             Logger.Info($"Getting customer with NIP: {nip}.");
-            var customer = await _customerService.GetAsync(nip);
+            var customer = await _customerService.GetByNipAsync(nip);
             if(customer == null)
             {
                 return NotFound();
@@ -35,8 +35,8 @@ namespace Invoice.Api.Controllers
             return Json(customer);
         }
 
-        [HttpGet("{name}")]
-        public async Task<IActionResult> Get(string name)
+        [HttpGet("name/{name}")]
+        public async Task<IActionResult> GetByName(string name)
         {
             Logger.Info($"Getting customers with name: {name}");
             var customer = await _customerService.GetByNameAsync(name);

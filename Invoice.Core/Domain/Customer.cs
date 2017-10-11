@@ -6,7 +6,7 @@ namespace Invoice.Core.Domain
     public class Customer
     {
         public Guid Id { get; protected set; }
-        public long Nip { get; protected set; }
+        public string Nip { get; protected set; }
         public string Name { get; protected set; }
         public string Address { get; protected set; }
         public string Email {get; protected set; }
@@ -17,7 +17,7 @@ namespace Invoice.Core.Domain
         {
         }
 
-        public Customer(long nip, string name, string address, string optEmail = null)
+        public Customer(string nip, string name, string address, string optEmail = null)
         {
             if (nip.ToString().Length != 10)
 			{

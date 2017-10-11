@@ -6,11 +6,11 @@ namespace Invoice.Core.Repositories
 {
     public interface ICompanyRepository : IRepository
     {
-        Task<Company> GetAsync(long nip);
-        Task<Company> GetAsync(string name);
+        Task<Company> GetByNipAsync(string nip);
+        Task<Company> GetByNameAsync(string name);
         Task<IEnumerable<Company>> GetAllAsync();
         Task AddAsync(Company company);
         Task UpdateAsync(Company company);
-        Task RemoveAsync(long nip);
+        Task RemoveAsync(string nip);
     }
 }

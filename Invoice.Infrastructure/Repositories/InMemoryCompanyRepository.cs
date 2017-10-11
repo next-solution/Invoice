@@ -21,10 +21,10 @@ namespace Invoice.Infrastructure.Repositories
         public async Task<IEnumerable<Company>> GetAllAsync()
         	=> await Task.FromResult(_company);
 
-		public async Task<Company> GetAsync(long nip)
+		public async Task<Company> GetByNipAsync(string nip)
 			=> await Task.FromResult(_company.Single(x => x.Nip == nip));
 
-		public async Task<Company> GetAsync(string name)
+		public async Task<Company> GetByNameAsync(string name)
 			=> await Task.FromResult(_company.Single(x => x.Name == name));
 
 		public async Task AddAsync(Company company)
@@ -33,9 +33,9 @@ namespace Invoice.Infrastructure.Repositories
             await Task.CompletedTask;
 		}
 
-		public async Task RemoveAsync(long nip)
+		public async Task RemoveAsync(string nip)
 		{
-			var company = await GetAsync(nip);
+			var company = await GetByNipAsync(nip);
 			_company.Remove(company);
 			await Task.CompletedTask;
 		}
